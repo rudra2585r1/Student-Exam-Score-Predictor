@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Exam Score Predictor</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>🎓 Student Exam Score Predictor</h1>
+
+        <form action="/predict" method="POST">
+
+            Study Hours per Day:
+            <input type="number" step="0.1" name="Study_Hours_per_Day"
+                   value="{{ form_data.Study_Hours_per_Day if form_data else '' }}" required>
+
+            Attendance Percentage:
+            <input type="number" step="0.1" name="Attendance_Percentage"
+                   value="{{ form_data.Attendance_Percentage if form_data else '' }}" required>
+
+            Previous Score:
+            <input type="number" step="0.1" name="Previous_Score"
+                   value="{{ form_data.Previous_Score if form_data else '' }}" required>
+
+            Sleep Hours:
+            <input type="number" step="0.1" name="Sleep_Hours"
+                   value="{{ form_data.Sleep_Hours if form_data else '' }}" required>
+
+            Assignments Completed:
+            <input type="number" name="Assignments_Completed"
+                   value="{{ form_data.Assignments_Completed if form_data else '' }}" required>
+
+            Extra Coaching:
+            <select name="Extra_Coaching">
+                <option value="Yes"
+                {% if form_data and form_data.Extra_Coaching == "Yes" %}selected{% endif %}>Yes</option>
+                <option value="No"
+                {% if form_data and form_data.Extra_Coaching == "No" %}selected{% endif %}>No</option>
+            </select>
+
+            Internet Usage Hours:
+            <input type="number" step="0.1" name="Internet_Usage_Hours"
+                   value="{{ form_data.Internet_Usage_Hours if form_data else '' }}" required>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if score %}
+            <div class="result">
+                <h2>Predicted Final Exam Score: {{ score }}</h2>
+                <h2>Status: {{ result }}</h2>
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
